@@ -1,0 +1,35 @@
+name: PSScriptAnalyzer Lint
+
+on:
+  push:
+    paths:
+      - '**.ps1'
+  pull_request:
+    paths:
+      - '**.ps1'
+
+jobs:
+  lint:
+    name: Run PSScriptAnalyzer
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set PowerShell execution policy
+        run: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+        shell: pwsh
+
+      - name: Install PSScriptAnalyzer module
+        run: Install-Module -Name PSScriptAnalyzer -Force -Scope CurrentUser
+        shell: pwsh
+
+      - name: Run PSScriptAnalyzer
+        run: |
+          $results = Invoke-ScriptAnalyzer -Path . -Recurse -Severity Warning, Error
+          if ($results.Count -gt 0) {
+            $results | Format-Table -AutoSize
+            Write-Error "PSScriptAnalyzer found issues. Please resolve them."
+          }
+        shell: pwsh
