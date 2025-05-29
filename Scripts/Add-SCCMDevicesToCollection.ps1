@@ -7,9 +7,6 @@
     and adds each as a direct membership rule to a specified collection.
     Outputs live terminal feedback and saves a log to a timestamped file.
 
-.AUTHOR
-    Shawn Tavares
-
 .PARAMETER DeviceListPath
     Path to the .txt file with one hostname per line.
 
