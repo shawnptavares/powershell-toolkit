@@ -13,9 +13,9 @@ A collection of production-tested PowerShell utilities designed to make device m
   - [Add-SCCMDevicesToCollection.ps1](#add-sccmdevicestocollectionps1)
   - [Copy-FileToServers.ps1](#copy-filetoserversps1)
   - [Send-ServerAndWebsiteStatusReport.ps1](#send-serverandwebsitestatusreportps1)
-- [👤 PowerShell Profile](#-powershell-profile)
-- [🛠 Modules Used](#-modules-used)
-- [📝 License](#-license)
+  - [👤 PowerShell Profile](#-powershell-profile)
+  - [🛠 Modules Used](#-modules-used)
+  - [📝 License](#-license)
 
 ---
 
