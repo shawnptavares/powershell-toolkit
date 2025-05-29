@@ -1,4 +1,4 @@
-v# 📂 Scripts
+# 📂 Scripts
 
 This folder contains reusable PowerShell scripts designed to help automate administrative tasks in Microsoft environments.
 
