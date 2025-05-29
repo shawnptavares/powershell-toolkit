@@ -22,7 +22,7 @@ Reads a list of device names from a `.txt` file, queries Microsoft Graph for the
     -InputFilePath "C:\Devices\device-list.txt" `
     -OutputCSVPath "C:\Devices\output.csv"
 ```
-## 🖥️ Check-ADComputerLastLogon.ps1
+## 🖥️ `Check-ADComputerLastLogon.ps1`
 
 Reads a list of hostnames from a file and queries on-premises Active Directory for each. If the device exists, it collects the LastLogonDate and exports results to a .csv report for audit or review.
 
@@ -42,7 +42,7 @@ Reads a list of hostnames from a file and queries on-premises Active Directory f
 Requires: RSAT / ActiveDirectory PowerShell module
 Scope: On-prem AD or hybrid environments
 
-## 📦 Add-SCCMDevicesToCollection.ps1
+## 📦 `Add-SCCMDevicesToCollection.ps1`
 
 Bulk-adds devices to an SCCM device collection using hostnames. Finds ResourceIDs from SCCM and adds each to the specified collection as direct membership rules.
 
@@ -64,4 +64,22 @@ Bulk-adds devices to an SCCM device collection using hostnames. Finds ResourceID
   ```
   Requires: SCCM Console + PowerShell module
 Must be run on a system with SCCM admin tools installed
+
+## 📁 `Copy-FileToServers.ps1`
+
+Copies a file to the `C$` share of a list of remote servers using background jobs. Ideal for quickly distributing installers, agents, or tools to a group of machines without using GPO, SCCM, or Intune.
+
+### ✅ Features:
+- Concurrent execution via PowerShell background jobs
+- Logs each success/failure to a timestamped `.log` file
+- Clean, single-line console feedback
+- Robust error handling and reporting
+
+### 🧪 Example Usage:
+
+```powershell
+.\Copy-FileToServers.ps1 `
+    -ServerListPath "C:\Lists\MyServers.txt" `
+    -SourceFile "C:\Tools\agent-installer.exe"
+```
 
