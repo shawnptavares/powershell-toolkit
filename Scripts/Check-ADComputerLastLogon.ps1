@@ -9,9 +9,6 @@
 .PARAMETER ComputerListPath
     The full path to the .txt file containing one hostname per line.
 
-.AUTHOR
-Shawn Tavares
-
 .PARAMETER ReportOutputPath
     The destination path for the resulting CSV report.
 
