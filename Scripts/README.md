@@ -32,7 +32,7 @@ Reads a list of hostnames from a file and queries on-premises Active Directory f
 - Sorted, clean CSV output
 - Single-line updating progress in terminal
 
-## 🧪 Example Usage:
+### 🧪 Example Usage:
 
 ```powershell
 .\Check-ADComputerLastLogon.ps1 `
@@ -41,3 +41,27 @@ Reads a list of hostnames from a file and queries on-premises Active Directory f
 ```
 Requires: RSAT / ActiveDirectory PowerShell module
 Scope: On-prem AD or hybrid environments
+
+## 📦 Add-SCCMDevicesToCollection.ps1
+
+Bulk-adds devices to an SCCM device collection using hostnames. Finds ResourceIDs from SCCM and adds each to the specified collection as direct membership rules.
+
+### ✅ Features:
+- Accepts a list of device names via parameter
+- Resolves ResourceIDs using Get-CMDevice
+- Adds devices to collection using Add-CMDeviceCollectionDirectMembershipRule
+- Clean terminal feedback and log file output
+- Automatically returns to the filesystem path after SCCM tasks
+
+### 🧪 Example Usage:
+
+  ```powershell
+  .\Add-SCCMDevicesToCollection.ps1 `
+    -DeviceListPath "C:\Devices\OfficeList.txt" `
+    -SiteServer "SCCM-Server01" `
+    -SiteCode "001" `
+    -CollectionName "MSO365 Force Update"
+  ```
+  Requires: SCCM Console + PowerShell module
+Must be run on a system with SCCM admin tools installed
+
