@@ -82,4 +82,24 @@ Copies a file to the `C$` share of a list of remote servers using background job
     -ServerListPath "C:\Lists\MyServers.txt" `
     -SourceFile "C:\Tools\agent-installer.exe"
 ```
+## ✉️ `Send-ServerAndWebsiteStatusReport.ps1`
 
+This script checks a list of servers for availability using ICMP ping, verifies internal website access using HTTP requests, and sends a daily summary report via email. Ideal for early-morning infrastructure monitoring.
+
+### ✅ Features:
+- Pings servers listed in a text file
+- Verifies internal web services with HTTP HEAD requests
+- Reports server up/down count and any unreachable websites
+- Sends plain-text email via SMTP
+
+### 🧪 Example Usage:
+
+```powershell
+.\Send-ServerAndWebsiteStatusReport.ps1 `
+    -ServerListPath "C:\Lists\serverList.txt" `
+    -WebsiteUrls @("website1", "website2") `
+    -SmtpServer "smtp-server" `
+    -From "noreply@domain.local" `
+    -To "it.team@domain.local" `
+    -Subject "Daily Status Check"
+```
