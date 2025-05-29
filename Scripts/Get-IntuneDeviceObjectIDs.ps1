@@ -30,7 +30,6 @@ param (
     [string]$LogPath = "$(Split-Path $OutputCSVPath)\DeviceExportLog_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
 )
 
-# ======== LOGGING FUNCTION ========
 function Write-Log {
     param (
         [string]$Message,
@@ -45,7 +44,6 @@ function Write-Log {
     }
 }
 
-# ======== SCRIPT START ========
 Write-Host "`n✅ Script Started! Reading device names from '${InputFilePath}'" -ForegroundColor Green
 Write-Log "Script started. Reading device names from '${InputFilePath}'" -Silent
 
