@@ -16,3 +16,11 @@ A curated collection of PowerShell scripts, functions, and modules I use across 
 1. Clone the repository:
    ```powershell
    git clone https://github.com/shawnptavares/powershell-toolkit.git
+
+2. Import your toolkit functions/modules into your session:
+   Import-Module ./Modules/CustomTools.psm1
+
+📌 Notes
+All code is written for PowerShell 5.1+ and PowerShell Core.
+
+Contributions and pull requests welcome.
