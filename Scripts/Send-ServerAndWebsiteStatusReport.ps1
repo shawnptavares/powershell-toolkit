@@ -27,7 +27,7 @@
 
 .EXAMPLE
     .\Send-ServerAndWebsiteStatusReport.ps1 `
-        -ServerListPath "C:\Lists\CSASERVER.txt" `
+        -ServerListPath "C:\Lists\serverList.txt" `
         -WebsiteUrls @("website1", "website2") `
         -SmtpServer "smtp-server" `
         -From "noreply@domain.local" `
