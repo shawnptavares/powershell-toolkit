@@ -32,7 +32,6 @@ param (
     [string]$LogPath = $(Join-Path -Path (Get-Location -PSProvider FileSystem).Path -ChildPath "CopyFileLog_$(Get-Date -Format 'yyyyMMdd_HHmmss').log")
 )
 
-# ======== LOGGING FUNCTION ========
 function Write-Log {
     param (
         [string]$Message,
@@ -47,10 +46,9 @@ function Write-Log {
     }
 }
 
-# ======== BEGIN SCRIPT ========
 Write-Log "Script started. Reading server list from $ServerListPath and copying file: $SourceFile" -Silent
 
-# Validate input paths
+#Validate input paths
 if (-not (Test-Path $ServerListPath)) {
     Write-Log "❌ Server list file not found: $ServerListPath" -Level "ERROR"
     exit 1
@@ -83,7 +81,7 @@ foreach ($server in $servers) {
     $jobMap[$job.Id] = $server
 }
 
-# Wait and receive
+#Wait and receive
 Wait-Job -Job $jobs
 
 $successCount = 0
@@ -108,7 +106,7 @@ foreach ($job in $jobs) {
     Remove-Job -Job $job
 }
 
-# ======== FINAL REPORT ========
+
 Write-Host "`n✅ File copy completed: $successCount succeeded, $errorCount failed." -ForegroundColor Yellow
 Write-Log "Script complete. $successCount success, $errorCount failure(s)." -Silent
 Write-Host "📄 Log saved to: $LogPath" -ForegroundColor DarkGray
