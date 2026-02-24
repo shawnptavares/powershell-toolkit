@@ -7,8 +7,6 @@
 
 A collection of **production-tested** PowerShell utilities built from real enterprise IT work — covering device management, reporting, automation, and escalation tasks across Active Directory, Azure AD, Intune, and ConfigMgr.
 
-These aren't toy scripts. They were written to solve real problems in environments with hundreds to thousands of managed devices.
-
 ---
 
 ## 📁 Structure
@@ -98,7 +96,7 @@ powershell-toolkit/
 
 ## 👤 PowerShell Profile
 
-The `Profiles/` folder contains my personal `$PROFILE` — a daily-driver setup for IT automation, escalation support, and cloud systems engineering. It's designed to make the terminal a powerful first stop for any IT task.
+The `Profiles/` folder contains my personal `$PROFILE` — a daily-driver setup for IT automation, escalation support, and cloud systems engineering.
 
 ### Included Functions
 
