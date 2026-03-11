@@ -63,18 +63,17 @@ function Write-Log {
 Write-Log "Script started. Reading device list from: $DeviceListPath" -Silent
 
 if (-not (Test-Path $DeviceListPath)) {
-    Write-Log "❌ Device list not found at: $DeviceListPath" -Level "ERROR"
+    Write-Log "Device list not found at: $DeviceListPath" -Level "ERROR"
     exit 1
 }
 
-#Import SCCM module
 try {
     Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1" -ErrorAction Stop
     Set-Location "$SiteCode`:"
     Write-Log "SCCM module imported and site code set to $SiteCode" -Silent
 }
 catch {
-    Write-Log "❌ Failed to import SCCM module or set location: $($_.Exception.Message)" -Level "ERROR"
+    Write-Log "Failed to import SCCM module or set location: $($_.Exception.Message)" -Level "ERROR"
     exit 1
 }
 
@@ -82,7 +81,6 @@ $deviceNames = Get-Content -Path $DeviceListPath
 $foundDevices = @()
 $notFound = @()
 
-#Lookup Resource IDs
 foreach ($device in $deviceNames) {
     Write-Host -NoNewline "`r Checking: $device       " -ForegroundColor Cyan
     try {
@@ -98,7 +96,6 @@ foreach ($device in $deviceNames) {
     }
 }
 
-#Add to collection
 $added = 0
 foreach ($resID in $foundDevices) {
     try {
@@ -110,15 +107,14 @@ foreach ($resID in $foundDevices) {
     }
 }
 
-#Reset to filesystem provider (in case user needs to write)
 Set-Location C:\
 
-Write-Host "`n✅ Added $added devices to collection '$CollectionName'" -ForegroundColor Green
-Write-Log "✅ Added $added devices to collection '$CollectionName'"
+Write-Host "`n Added $added devices to collection '$CollectionName'" -ForegroundColor Green
+Write-Log " Added $added devices to collection '$CollectionName'"
 
 if ($notFound.Count -gt 0) {
-    Write-Host "⚠️ Devices not found in SCCM:" -ForegroundColor Yellow
+    Write-Host "Devices not found in SCCM:" -ForegroundColor Yellow
     $notFound | ForEach-Object { Write-Host $_ -ForegroundColor Yellow }
-    Write-Log "⚠️ $($notFound.Count) devices were not found." -Level "WARN"
+    Write-Log "$($notFound.Count) devices were not found." -Level "WARN"
 }
-Write-Host "`n📄 Log saved to: $LogPath" -ForegroundColor DarkGray
+Write-Host "`nLog saved to: $LogPath" -ForegroundColor DarkGray
