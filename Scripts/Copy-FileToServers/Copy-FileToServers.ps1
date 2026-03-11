@@ -18,7 +18,7 @@
 
 .EXAMPLE
     .\Copy-FileToServers.ps1 `
-        -ServerListPath "C:\Servers\LSSList.txt" `
+        -ServerListPath "C:\Servers\ServerList.txt" `
         -SourceFile "C:\Installers\app.exe"
 #>
 
@@ -48,13 +48,12 @@ function Write-Log {
 
 Write-Log "Script started. Reading server list from $ServerListPath and copying file: $SourceFile" -Silent
 
-#Validate input paths
 if (-not (Test-Path $ServerListPath)) {
-    Write-Log "❌ Server list file not found: $ServerListPath" -Level "ERROR"
+    Write-Log "Server list file not found: $ServerListPath" -Level "ERROR"
     exit 1
 }
 if (-not (Test-Path $SourceFile)) {
-    Write-Log "❌ Source file not found: $SourceFile" -Level "ERROR"
+    Write-Log "Source file not found: $SourceFile" -Level "ERROR"
     exit 1
 }
 
@@ -63,7 +62,7 @@ $jobs = @()
 $jobMap = @{}
 
 foreach ($server in $servers) {
-    Write-Host -NoNewline "`r📁 Copying to: $server     " -ForegroundColor Cyan
+    Write-Host -NoNewline "`r Copying to: $server     " -ForegroundColor Cyan
     $destinationPath = "\\$server\C$\$(Split-Path $SourceFile -Leaf)"
 
     $job = Start-Job -ScriptBlock {
@@ -81,7 +80,6 @@ foreach ($server in $servers) {
     $jobMap[$job.Id] = $server
 }
 
-#Wait and receive
 Wait-Job -Job $jobs
 
 $successCount = 0
@@ -107,6 +105,6 @@ foreach ($job in $jobs) {
 }
 
 
-Write-Host "`n✅ File copy completed: $successCount succeeded, $errorCount failed." -ForegroundColor Yellow
+Write-Host "`n File copy completed: $successCount succeeded, $errorCount failed." -ForegroundColor Yellow
 Write-Log "Script complete. $successCount success, $errorCount failure(s)." -Silent
-Write-Host "📄 Log saved to: $LogPath" -ForegroundColor DarkGray
+Write-Host "Log saved to: $LogPath" -ForegroundColor DarkGray
