@@ -24,11 +24,11 @@ param (
     [string]$ReportOutputPath
 )
 
-Write-Host "📋 Reading computer list from: $ComputerListPath"
+Write-Host "Reading computer list from: $ComputerListPath"
 
 #Checking for file
 if (-not (Test-Path $ComputerListPath)) {
-    Write-Error "❌ Input list not found: $ComputerListPath"
+    Write-Error "Input list not found: $ComputerListPath"
     exit 1
 }
 
@@ -36,7 +36,7 @@ $deviceNames = Get-Content -Path $ComputerListPath
 $reportData = @()
 
 foreach ($name in $deviceNames) {
-    Write-Host -NoNewline "`r🔍 Checking: $name       " -ForegroundColor Cyan
+    Write-Host -NoNewline "`rChecking: $name       " -ForegroundColor Cyan
 
     try {
         $adComputer = Get-ADComputer -Filter { Name -eq $name } -Property LastLogonDate -ErrorAction Stop
@@ -55,4 +55,4 @@ foreach ($name in $deviceNames) {
 
 # Export results to CSV
 $reportData | Sort-Object ComputerName | Export-Csv -Path $ReportOutputPath -NoTypeInformation -Encoding UTF8
-Write-Host "`n✅ Finished! Exported $($reportData.Count) entries to: $ReportOutputPath" -ForegroundColor Green
+Write-Host "`n Finished! Exported $($reportData.Count) entries to: $ReportOutputPath" -ForegroundColor Green
