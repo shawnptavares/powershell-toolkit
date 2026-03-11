@@ -17,7 +17,7 @@
     Optional: Path to the log file. If not provided, a timestamped log is created in the same folder as the CSV.
 
 .EXAMPLE
-    .\Export-DeviceObjectIDs.ps1 -InputFilePath "devices.txt" -OutputCSVPath "export.csv"
+    .\Get-IntuneDeviceObjectIDs.ps1 -InputFilePath "devices.txt" -OutputCSVPath "export.csv"
 #>
 
 param (
@@ -44,13 +44,12 @@ function Write-Log {
     }
 }
 
-Write-Host "`n✅ Script Started! Reading device names from '${InputFilePath}'" -ForegroundColor Green
+Write-Host "`n Script Started! Reading device names from '${InputFilePath}'" -ForegroundColor Green
 Write-Log "Script started. Reading device names from '${InputFilePath}'" -Silent
 
-#Connect to MgGraph
 try {
     Connect-MgGraph -Scopes "Directory.Read.All" -NoWelcome
-    Write-Host "`n✅ Connected to Microsoft Graph with the required permissions!" -ForegroundColor Green
+    Write-Host "`n Connected to Microsoft Graph with the required permissions!" -ForegroundColor Green
 
     Write-Log "Connected to Microsoft Graph." -Silent
 }
@@ -59,22 +58,18 @@ catch {
     exit 1
 }
 
-#Gather device names
 $deviceNames = Get-Content -Path $InputFilePath
 
-#Create CSV
 @(
     "version:v1.0"
     "Member object ID or user principal name [memberObjectIdOrUpn] Required"
 ) | Out-File -FilePath $OutputCSVPath -Encoding UTF8 -Force
 Write-Log "Initialized CSV at '${OutputCSVPath}'" -Silent
 
-#cleaning up how records are shown...
 $progressMessage = "Processing device: "
 
-#Process each device
 foreach ($deviceName in $deviceNames) {
-   Write-Host -NoNewline "`r🔍 $progressMessage $deviceName   " -ForegroundColor Cyan
+   Write-Host -NoNewline "`r $progressMessage $deviceName   " -ForegroundColor Cyan
 
     Write-Log "Processing device: ${deviceName}" -Silent
 
@@ -98,5 +93,5 @@ foreach ($deviceName in $deviceNames) {
     }
 }
 
-Write-Log "✅ Script complete. CSV saved to '${OutputCSVPath}'. Log saved to '${LogPath}'." -Silent
-Write-Host "`n✅ Done! CSV saved to '${OutputCSVPath}', Log file: $LogPath" -ForegroundColor Green
+Write-Log "Script complete. CSV saved to '${OutputCSVPath}'. Log saved to '${LogPath}'." -Silent
+Write-Host "`n Done! CSV saved to '${OutputCSVPath}', Log file: $LogPath" -ForegroundColor Green
